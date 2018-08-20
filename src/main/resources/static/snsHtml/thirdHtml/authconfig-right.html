@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<TITLE></TITLE>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="../../lib/zTree/v3/css/zTreeStyle/zTreeStyle.css" type="text/css">
+	<link rel="stylesheet" href="../../css/treeDom.css" type="text/css">
+	<link rel="stylesheet" href="../../lib/jquery-ui-1.12.1/jquery-ui.min.css">
+	<script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="../../static/yafa-restful-client.js"></script>
+	<script type="text/javascript" src="../../js/common.js"></script>
+	<script type="text/javascript">
+		var thisURL = document.URL;  
+		//alert("thisURL------"+thisURL);
+		var getval =thisURL.split('?')[1];  
+		var str1= getval.split("=")[1];
+		var levelId = str1.split('&')[0];
+		var numberId = getval.split('=')[2];
+	</script>
+</HEAD>
+<BODY>
+<div class="content_wrap" >
+	<div class="right">
+		<div class="ztree_node_title">
+			<span class="showTotalInfo1"></span><span class="showTotalInfo2"></span><span class="showTotalInfo3"></span>
+		</div>
+		<div class="accountinfodiv" style="display:none;">
+			<ul class="info_ul info_ul1" id="account_msg">
+				<!-- <li class="first_li"><button class="head_btn">账号</button></li> -->
+			</ul>
+		</div>
+		
+		<div class="accountMappInfoDIV" style="display:none;">
+			<ul class="info_ul" id="account_mapp_msg">
+				<!-- <li class="first_li"><button class="head_btn">服务</button><button class="add_btn addAccountAuthMapp">添加数据</button></li> -->
+			</ul>
+		</div>
+		
+		<div class="info" style="display:none;">
+			<ul class="info_ul info_ul1" id="scheme_msg">
+				<!-- <li class="first_li"><button class="head_btn"><span id="span_title">渠道</span></button></li> -->
+			</ul>
+			<ul class="info_ul" id="authen_msg">
+				<!-- <li class="first_li"><button class="head_btn">鉴权</button></li> -->
+			</ul>
+			<ul class="info_ul" id="encrpty_msg">
+				<!-- <li class="first_li"><button class="head_btn">加密</button></li> -->
+			</ul>
+			<ul class="info_ul" id="server_msg">
+				<!-- <li class="first_li"><button class="head_btn">服务</button></li> -->
+			</ul>
+			<ul class="info_ul" id="callBack_msg">
+				<!-- <li class="first_li"><button class="head_btn">回调</button><button class="add_btn">添加数据</button></li> -->
+			</ul>
+		</div>
+
+		<div class="addInfo" style="display:none;">
+			<ul class="info_ul info_ul1" id="datasource_msg">
+				<li class="first_li"><button class="head_btn">添加<span id="span_title1">渠道</span></button></li>
+				<!--<li class="first_info"><div class="d_info">方案名称：<span>qqq</span></div><div class="d_info">方案code：<span>66</span></div></li>-->
+			</ul>
+		</div>
+		
+	</div>
+</div>
+<script type="text/javascript" src="../../js/thirdJs/authconfig-right.js"></script>
+<script type="text/javascript" src="../../lib/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+</BODY>
+</HTML>

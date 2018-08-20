@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>配置预览</title>
+	<link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+	<link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+	<link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+	<link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+	<link rel="stylesheet" type="text/css" href="../../lib/jquery-ui-1.12.1/jquery-ui.min.css">
+</head>
+<body>
+	<nav class="breadcrumb">
+	<i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>
+	第三方管理 <span class="c-gray en">&gt;</span> 配置预览
+    </nav>
+    <div class="page-container">
+		<div class="account_select pd-5 bg-1 bk-gray">
+			<!-- <select name="" id="accountSelID">
+				<option value="-1">请选择账户信息1</option>
+			</select> -->
+			<input type="text" id="datasourceName" onblur="loadProjectSelect();" placeholder="请输入渠道CODE或名称..." >
+			<select id="projectSelID" onchange="loadProjectInfo();"></select>
+		</div>
+		<div class="account_wrap">
+		<div class="account_message_box">	
+		  <div class="panel panel-default mt-20" id="accountDiv">
+			<div class="panel-header">账号信息</div>
+			<div class="panel-body">
+			  <div class="account_model_box">
+				<fieldset id="accountBase">
+					<legend>账号</legend>
+				</fieldset>
+			  </div>
+			</div>
+		  </div>
+		  <div class="panel panel-default mt-20" id="sourceDiv">
+			<div class="panel-header">渠道</div>
+			<div class="panel-body">
+			  <div class="account_model_box">
+				<fieldset id="sourceBase">
+					<legend>基本</legend>
+				</fieldset>
+				<fieldset id="sourceEncrpty">
+				    <legend>鉴权</legend>
+				</fieldset>
+				<fieldset id="sourceServer">
+				    <legend>服务</legend>
+				</fieldset>
+				<fieldset id="sourceCallback">
+				    <legend>回调</legend>
+				</fieldset>
+			  </div>
+			</div>
+		  </div>
+		  <div class="panel panel-default mt-20" id="projectDiv">
+			<div class="panel-header">方案</div>
+			<div class="panel-body">
+			  <div class="account_model_box">
+				<fieldset id="projectBase">
+				    <legend>基本</legend>
+				</fieldset>
+				<fieldset id="projectEncrpty">
+				    <legend>鉴权</legend>
+				</fieldset>
+				<fieldset id="projectServer">
+				    <legend>服务</legend>
+				</fieldset>
+				<fieldset id="projectCallback">
+				    <legend>回调</legend>
+				</fieldset>
+			  </div>
+			</div>
+		  </div>
+		</div>
+		</div>
+			  
+		  <!-- 账户基本信息DIV -->
+		  <div id="accountBasicUl" style="display:none;">
+		    <ul class="detail_message">
+				<li class="detail_message_li"><span class="preview_span1">账号ID:</span><span class="preview_span2">s61</span></li>
+				<li class="detail_message_li"><span class="preview_span1">账号代码:</span><span class="preview_span2">s62</span></li>
+				<li class="detail_message_li"><span class="preview_span1">账号名称:</span><span class="preview_span2">s63</span></li>
+				<li class="detail_message_li"><span class="preview_span1">渠道手机:</span><span class="preview_span2">s64</span></li>
+				<li class="detail_message_li"><span class="preview_span1">渠道邮箱:</span><span class="preview_span2">s65</span></li>
+			</ul>
+		  </div>
+		  
+		  <!-- 渠道基本信息DIV -->
+		  <div id="sourceBasicUl" style="display:none;">
+			<ul class="account_detail detail_message">
+				<li class="detail_message_li"><span class="preview_span1">渠道代码:</span><span class="preview_span2">s51</span></li>
+				<li class="detail_message_li"><span class="preview_span1">渠道名称:</span><span class="preview_span2">s52</span></li>
+			</ul>
+		  </div>
+		  
+		  <!-- 方案基本信息DIV -->
+		  <div id="projectBasicUl" style="display:none;">
+		    <ul class="account_detail detail_message">
+		    	<li class="detail_message_li"><span class="preview_span1">方案代码:</span><span class="preview_span2">s41</span></li>
+				<li class="detail_message_li"><span class="preview_span1">方案名称:</span><span class="preview_span2">s42</span></li>
+		    </ul>
+		  </div>
+		  
+		  <!-- 服务详细信息DIV -->
+		  <div id="sourceServerUl" style="display:none;">
+	        <ul class="account_detail detail_message">
+				<li class="detail_message_li"><span class="preview_span1">环境类型:</span><span class="preview_span2">s1</span></li>
+				<li class="detail_message_li"><span class="preview_span1">服务类型:</span><span class="preview_span2">s2</span></li>
+				<li class="detail_message_li1"><span class="preview_span1">服务地址:</span><span class="preview_span3">s3</span></li>
+		    </ul>
+		  </div>
+		  	
+		  <!-- 回调信息DIV -->
+		  <div id="sourceCallbackUl" style="display:none;">
+		    <ul class="account_detail detail_message">
+				<li class="detail_message_li"><span class="preview_span1">环境类型:</span><span class="preview_span2">s4</span></li>
+		    	<li class="detail_message_li"><span class="preview_span1">回调类型:</span><span class="preview_span2">s5</span></li>
+				<li class="detail_message_li1"><span class="preview_span1">回调地址:</span><span class="preview_span3">s6</span></li>
+		    </ul>
+		  </div>
+		  	
+		  <!-- 鉴权信息DIV -->
+		  <div id="sourceEncrptyUl" style="display:none;">
+		    <ul class="account_detail detail_message">
+				<li class="detail_message_li"><span class="preview_span1">鉴权类型:</span><span class="preview_span2">s11</span></li>
+				<li class="detail_message_li"><span class="preview_span1">鉴权参数1:</span><span class="preview_span2">s12</span></li>
+				<li class="detail_message_li"><span class="preview_span1">鉴权参数2:</span><span class="preview_span2">s13</span></li>
+				<li class="detail_message_li"><span class="preview_span1">加密类型:</span><span class="preview_span2">s14</span></li>
+				<li class="detail_message_li"><span class="preview_span1">加密参数1:</span><span class="preview_span2">s15</span></li>
+				<li class="detail_message_li"><span class="preview_span1">加密参数2:</span><span class="preview_span2">s16</span></li>
+			</ul>
+		  </div>
+	
+	</div>
+	
+	<script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script> 
+	<script type="text/javascript" src="../../lib/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="../../static/h-ui/js/H-ui.js"></script>
+	<script type="text/javascript" src="../../static/yafa-restful-client.js"></script>
+	<script type="text/javascript" src="../../js/thirdJs/config-preview.js"></script>
+</body>
+</html>

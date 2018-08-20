@@ -1,0 +1,13 @@
+spring:
+  #配置文件环境
+  profiles:
+    active: @profileActive@
+  #时间格式转换
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+#mybatis加载
+mybatis:
+  mapper-locations: classpath:mapping/*.xml
+  type-aliases-package: com.yaic.auth.*.model,com.yaic.quartz.dto.domain

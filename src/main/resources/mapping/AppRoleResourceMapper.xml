@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yaic.auth.interior.dao.AppRoleResourceDao">
+
+	<resultMap id="treeNodeMap" type="com.yaic.auth.interior.common.TreeNode">
+		<result property="id" column="resource_id" jdbcType="VARCHAR"></result>
+		<result property="level" column="resource_level" jdbcType="VARCHAR"></result>
+		<result property="parentId" column="parent_resource_id"
+			jdbcType="VARCHAR"></result>
+		<result property="text" column="resource_name" jdbcType="VARCHAR"></result>
+		<result property="icon" column="resource_icon_class" jdbcType="VARCHAR"></result>
+		<result property="type" column="resource_type" jdbcType="VARCHAR"></result>
+		<result property="actionUrl" column="action_url" jdbcType="VARCHAR"></result>
+		<result property="endFlag" column="end_flag" jdbcType="VARCHAR"></result>
+		<result property="displayOrder" column="display_order"
+			jdbcType="INTEGER"></result>
+		<result property="opened" column="opened" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		ROLE_RESOURCE_ID, CREATED_DATE, CREATED_BY, UPDATED_DATE, UPDATED_BY, ROLE_ID,
+		RESOURCE_ID
+	</sql>
+
+	<!-- 删除角色对应的资源 -->
+	<delete id="deleteByRoleId" parameterType="java.lang.String">
+		delete from APP_ROLE_RESOURCE where
+		ROLE_ID = #{roleId}
+	</delete>
+	
+	<select id="findAllMenuResource" resultMap="treeNodeMap">
+		SELECT
+		A.RESOURCE_ID,A.RESOURCE_NAME,A.RESOURCE_TYPE,A.RESOURCE_LEVEL,A.PARENT_RESOURCE_ID,A.PARENT_RESOURCE_ID,A.RESOURCE_ICON_CLASS,A.END_FLAG,A.ACTION_URL,A.DISPLAY_ORDER,
+		CASE WHEN A.RESOURCE_LEVEL = 1 THEN 1 ELSE 0 END AS OPENED
+		FROM
+		APP_RESOURCE A
+		WHERE A.RESOURCE_TYPE != 'service'
+		ORDER BY
+		A.RESOURCE_LEVEL DESC ,A.DISPLAY_ORDER, A.PARENT_RESOURCE_ID ,
+		A.RESOURCE_ID
+	</select>
+
+	<select id="findResourceByRoleId" resultMap="treeNodeMap"
+		parameterType="Map">
+		SELECT A.RESOURCE_ID,A.RESOURCE_LEVEL,A.PARENT_RESOURCE_ID,A.RESOURCE_NAME,
+		A.RESOURCE_TYPE,A.RESOURCE_ICON_CLASS,
+		CASE WHEN B.ROLE_RESOURCE_ID is NULL THEN 0 ELSE 1 END AS SELECTED
+		FROM
+		APP_RESOURCE A inner JOIN APP_ROLE_RESOURCE B ON A.RESOURCE_ID =
+		B.RESOURCE_ID AND B.ROLE_ID = #{roleId}
+		ORDER BY A.RESOURCE_LEVEL DESC
+		, A.PARENT_RESOURCE_ID , A.RESOURCE_ID
+	</select>
+
+	<insert id="saveRoleResourceList" parameterType="java.util.List">
+		INSERT INTO APP_ROLE_RESOURCE
+		(CREATED_BY,UPDATED_BY,ROLE_ID, RESOURCE_ID )
+		VALUES
+		<foreach collection="list" index="index" item="item"
+			separator=",">
+			(#{item.createdBy,jdbcType=VARCHAR},#{item.updatedBy,jdbcType=VARCHAR},
+			#{item.roleId,jdbcType=VARCHAR},#{item.resourceId,jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+
+</mapper>

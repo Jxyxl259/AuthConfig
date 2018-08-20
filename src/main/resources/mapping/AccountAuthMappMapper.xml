@@ -1,0 +1,118 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yaic.auth.thirdparty.dao.AccountAuthMappDao">
+
+	<resultMap id="BaseResultMap" type="com.yaic.auth.thirdparty.dto.AccountAuthMappDto">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="app_id" jdbcType="VARCHAR" property="appId" />
+		<result column="account_id" jdbcType="INTEGER" property="accountId" />
+		<result column="app_code" jdbcType="VARCHAR" property="appCode" />
+		<result column="account_name" jdbcType="VARCHAR" property="accountName" />
+		
+		<result column="mapping_id" jdbcType="INTEGER" property="mappingId" />
+		<result column="project_id" jdbcType="INTEGER" property="projectId" />
+		<result column="request_type" jdbcType="VARCHAR" property="requestType" />
+		<result column="request_url" jdbcType="VARCHAR" property="requestUrl" />
+		<result column="server_id" jdbcType="INTEGER" property="serverId" />
+		
+		<result column="server_env" jdbcType="VARCHAR" property="serverEnv" />
+		<result column="server_status" jdbcType="VARCHAR" property="serverStatus" />
+		<result column="server_status_str" jdbcType="VARCHAR" property="serverStatusStr" />
+		<result column="server_type" jdbcType="VARCHAR" property="serverType" />
+		<result column="server_type_str" jdbcType="VARCHAR" property="serverTypeStr" />
+		
+		<result column="server_url" jdbcType="VARCHAR" property="serverUrl" />
+		<result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
+		<result column="created_user" jdbcType="VARCHAR" property="createdUser" />
+		<result column="updated_date" jdbcType="TIMESTAMP" property="updatedDate" />
+		<result column="updated_user" jdbcType="VARCHAR" property="updatedUser" />
+		
+		<result column="auth_id" jdbcType="INTEGER" property="authMappAuthId" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		t.id,t.app_id,t1.account_id,t1.app_code,t1.account_name,
+		t.mapping_id,t2.project_id,t2.request_type,t2.request_url,
+		t3.server_id,t3.server_env,t3.server_status,t3.server_type,
+		t3.server_url,t4.parameter_describe AS server_type_str  
+	</sql>
+
+	<select id="getSingleAccountAuthMappLists" resultMap="BaseResultMap" 
+		parameterType="com.yaic.auth.thirdparty.dto.AccountAuthMappDto" >
+		SELECT 
+			<include refid="Base_Column_List" />
+		FROM t_account_auth_mapping t 
+			LEFT JOIN t_account t1 ON t.app_id = t1.app_id
+			LEFT JOIN t_auth_mapping t2 ON t.mapping_id = t2.mapping_id
+			LEFT JOIN t_server t3 ON t2.server_id =  t3.server_id
+			LEFT JOIN (SELECT * FROM t_auth_pub_code WHERE parameter_type = 'SERVER_MAPPING_SMALL_TYPE') AS t4 ON t3.server_type = t4.parameter_value
+		<trim prefix="WHERE (" suffix=")" prefixOverrides="AND |OR ">
+			<if test="id != null and id != ''">
+				AND t.id = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="appId != null and appId != ''">
+				AND t.app_id = #{appId,jdbcType=VARCHAR}
+			</if>
+			<if test="accountId != null and accountId != ''">
+				AND t1.account_id = #{accountId,jdbcType=INTEGER}
+			</if>
+			<if test="mappingId != null and mappingId != ''">
+				AND t2.mapping_id = #{mappingId,jdbcType=INTEGER}
+			</if>
+			<if test="projectId != null and projectId != ''">
+				AND t2.project_id = #{projectId,jdbcType=INTEGER}
+			</if>
+			<if test="serverId != null and serverId != ''">
+				AND t3.server_id = #{serverId,jdbcType=INTEGER}
+			</if>
+		</trim>
+	</select>
+	
+	<select id="getAllHistoryMappLists" parameterType="com.yaic.auth.thirdparty.dto.AccountAuthMappDto" resultMap="BaseResultMap">
+	    SELECT
+			t.mapping_id,t.project_id,t.request_type,t.request_url,t.auth_id,
+			t1.server_id,t1.server_env,t1.server_status,t3.parameter_describe AS server_status_str,
+			t1.server_type,t2.parameter_describe AS server_type_str,t1.server_url,
+			t.created_date,t.created_user, t.updated_date, t.updated_user
+		FROM
+		 (SELECT * FROM t_auth_mapping WHERE request_type IN ('HISTORY_COMMON','HISTORY_CUSTOM','HISTORY_ENCRYPT') AND valid_flag = 1  
+		 	<if test="requestType != null and requestType != ''">
+				AND request_type = #{requestType,jdbcType=VARCHAR}
+			</if>
+		 	<if test="mappingId != null and mappingId != ''">
+				AND mapping_id = #{mappingId,jdbcType=INTEGER}
+			</if>
+			<if test="requestUrl != null and requestUrl != ''">
+				AND request_url like CONCAT('%', #{requestUrl}, '%')
+			</if>
+		 	) AS t
+		INNER JOIN (SELECT * FROM t_server WHERE valid_flag = 1 
+		 	<if test="serverEnv != null and serverEnv != ''">
+				AND server_env = #{serverEnv,jdbcType=VARCHAR}
+			</if>
+		 	<if test="serverType != null and serverType != ''">
+				AND server_type = #{serverType,jdbcType=VARCHAR}
+			</if>
+		 	<if test="serverStatus != null and serverStatus != ''">
+				AND server_status = #{serverStatus,jdbcType=INTEGER}
+			</if>
+			) AS t1 ON t.server_id = t1.server_id
+		LEFT JOIN (SELECT * FROM t_auth_pub_code WHERE parameter_type = 'SERVER_MAPPING_SMALL_TYPE') AS t2 ON t1.server_type = t2.parameter_value
+		LEFT JOIN (SELECT * FROM t_auth_pub_code WHERE parameter_type = 'SERVER_STATUS') AS t3 ON t1.server_status = t3.parameter_value
+		ORDER BY t.created_date DESC 
+	</select>
+	
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.yaic.auth.thirdparty.model.AccountAuthMappModel">
+		insert into t_account_auth_mapping
+			( app_id,mapping_id )
+		values 
+		(	#{appId,jdbcType=INTEGER},
+			#{mappingId,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+	  	delete from t_account_auth_mapping
+	  	where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+</mapper>

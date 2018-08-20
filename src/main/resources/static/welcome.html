@@ -1,0 +1,120 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+<title>我的桌面</title>
+</head>
+<body>
+<div class="page-container page-information_sns">
+	<div  class="information_sns" style="display: none;">
+			<h3 class="information_sns_head f-20">欢迎使用鉴权配置管理系统</h3>
+			<h4 class="information_sns_title f-18"><br>
+				鉴权配置管理系统主要负责鉴权系统的数据配置管理，鉴权系统和鉴权配置管理系统相辅相成，共同完成鉴权功能。为了让您可以快速理解系统，我们将从以下三个方面为您揭示鉴权系统的核心功能： 
+			</h4>
+			<div class="control_progress_box">
+				<div class="control_progress">
+					<h4>1.和流程有关的一些关键字段：</h4>
+					
+					<h5>1)接口类型(T_AUTH_MAPPINGG.REQUEST_TYPE)：</h5>
+					<p class="information_text">
+						a.原始通用(HISTORY_COMMON)：原OPEN系统中的通用鉴权接口，该接口类型只能配置在账号(app_id)层级下，其request_url全局唯一。</p>
+					<p class="information_text">
+						b.原始加密(HISTORY_ENCRYPT)：原OPEN系统中除通用鉴权外的其它加密类型，该接口类型只能配置在账号(app_id)层级下，其request_url全局唯一。</p>
+					<p class="information_text">
+						c.自定义(HISTORY_CUSTOM)：原OPEN系统中不需要加密的类型，该接口类型只能配置在账号(app_id)层级下，其request_url全局唯一。</p>
+					<p class="information_text">
+						d.渠道(DATA_SOURCE)：渠道层级下配置的接口类型，渠道下的通用接口，方案中的低优先级接口，其request_url在渠道下唯一。</p>
+					<p class="information_text">
+						e.方案(PROJECT)：方案层级下配置的接口类型，方案下的通用接口，方案中的低优先级接口，其request_url在方案下唯一。</p>
+						
+					<h5>2)鉴权类型(T_AUTH_ENCRYPT.AUTH_TYPE)：</h5>
+					<p class="information_text">
+						a.不鉴权(NO_AUTH)：即不对权限做任何校验。</p>
+					<p class="information_text">
+						b.通用鉴权(COMMON_AUTH)：即旧OPEN系统中通用的鉴权方式，通过APP_ID和APP_SECRET获取OPEN_ID和ACCESS_TOKEN两个参数，我们会校验OPEN_ID和ACCESS_TOKEN的正确性，通用鉴权中鉴权参数即为APP_SECRET，可允许配置两个APP_SECRET，两者独立鉴权，互不影响。</p>
+					<p class="information_text">
+						c.MD5签名(MD5)：该种方式需要渠道对报文做一次MD5的哈希，哈希值作为请求参数sign的值，我们会校验该哈希值的正确性，MD5签名中的鉴权参数即为哈希时的“盐”。</p>
+					<p class="information_text">
+						d.RSA签名(RSA)：渠道通过我们提供的SDK做签名，将签名值作为请求参数sign的值，我们会校验签名值的正确性，RSA签名中鉴权参数即为公钥。</p>
+					<p class="information_text">
+						e.IP白名单限制(IP)：渠道提供其出口IP，我们会校验请求的IP的正确性，IP白名单限制中鉴权参数即为渠道提供的出口IP地址。</p>
+					
+					<h5>3)加密类型(T_AUTH_ENCRYPT.ENCRYPT_TYPE)：</h5>
+					<p class="information_text">
+						a.不加密(NO_ENCRYPT):即不对报文加密操作。</p>
+					<p class="information_text">
+						b.AES加密(AES)：渠道通过AES算法对报文做一次加密，我们的鉴权系统会在转发前对报文做解密，直接向内部系统转发明文，内部系统返回再对响应报文做一次加密，返回给渠道密文。AES加密中加密参数即为加密KEY。
+						<mark class="mark">[注：AES加密类型尚未实现，请不要使用。]</mark></p>
+					<p class="information_text">
+						c.RSA加密(RSA)：渠道通过我们提供的SDK对报文做一次加密，我们的鉴权系统会在转发前对报文做解密，直接向内部系统转发明文，内部系统返回再对响应报文做一次加密，返回给渠道密文。RSA加密中加密参数即为公钥。</p>
+					
+					<h5>4)回调类型(T_CALLBACK_URL.CALLBACK_TYPE)：</h5>
+					<p class="information_text">
+						a.支付回调(PAY_CALLBACK)：支付成功后的异步回调通知。</p>					
+					<p class="information_text">
+						b.退保回调(CANCEL_INSURANCE_CALLBACK)：线下退保成功后的异步回调通知。</p>
+				</div>
+				<div class="control_progress">
+				
+					<h4>2.鉴权转发流程-鉴权转发流程在鉴权系统实现。</h4>
+					
+					<h5>1)隐含的两种鉴权转发流程：</h5>
+					<p class="information_text">
+						a.为了兼容老OPEN系统，新鉴权系统内部隐含两种鉴权转发流程(为方便叙述,姑且将其称之为新流程和老流程)，根据请求参数中是否包含data_source和agrt_code来判断走哪一种流程，如果请求参数中data_source和agrt_code至少有一个不为空，则走新流程，反之，两个参数均为空则走老流程。</p>
+					<p class="information_text">
+						b.老流程只能转发接口类型为“HISTORY_”开头的3种接口，即:HISTORY_COMMON/HISTORY_CUSTOM/HISTORY_ENCRYPT，新流程可以转发全部5种接口类型。</p>
+					
+					<h5>2)老流程的三种接口类型鉴权、转发、加/解密流程：在数据层面，老流程的三种类型的接口和账号直接通过一张辅助表关联。</h5>
+					<p class="information_text">
+						a.HISTORY_COMMON：该类型接口直接默认其鉴权类型为COMMON_AUTH，我们首先校验OPEN_ID和ACCESS_TOKEN的有效性，然后通过上面的参数获取到APP_ID，根据APP_ID从接口/账号关联表中获取该账号下的接口服务，最后确定该账号是否有该接口权限，有则转发之，否则报错返回。虽然该接口类型一般不加密。</p>
+					<p class="information_text">
+						b.HISTORY_ENCRYPT:该类型接口默认鉴权类型为非COMMON_AUTH和NO_AUTH，我们首先根据请求参数APP_ID校验从接口/账号关联表中获取该账号下的接口服务，确定该账号是否有该接口权限，然后获取鉴权类型以做相应的权限校验处理，接下来获取加密类型以做相应的解密处理，解密结束后即转发之，最后将响应报文加密返回。</p>
+					<p class="information_text">
+						c.HISTORY_CUSTOM：该类型接口不做任何权限校验，直接转发之。</p>	
+					
+					<h5>3)新流程5种接口类型鉴权、转发、加/解密流程：</h5>
+					<p class="information_text">
+						a.DATA_SOURCE：校验该渠道下是否包含该服务，根据鉴权类型做权限校验处理，根据加密类型做加解密处理；</p>
+					<p class="information_text">
+						b.PROJECT_CODE：校验该方案及该方案所属渠道是否包含该服务，根据鉴权类型做权限校验处理，根据加密类型做加解密处理</p>
+					<p class="information_text">
+						c.HISTORY_COMMON：同老流程</p>
+					<p class="information_text">
+						d.HISTORY_ENCRYPT：同老流程</p>
+					<p class="information_text">
+						e.HISTORY_CUSTOM：同老流程</p>
+				
+				</div>
+				<div class="control_progress">
+					<h4>3.配置流程-配置流程在鉴权配置管理系统中实现</h4>
+					<h5>1)	一个不太准确的级别描述：最高层级为账号，账号下包含一或多个渠道，渠道下包含一或多个方案。</h5>
+					<h5>2)鉴权配置系统有一个全局默认的账号，可以在该账号下配置不属于任何渠道的自定义类型的接口。</h5>
+					<h5>3)账号层级可以配置HISTORY_COMMON/HISTORY_CUSTOM/HISTORY_ENCRYPT三种类型的接口，以做历史数据兼容。</h5>
+					<h5>4)渠道层级可以配置DATA_SOURCE类型的接口，可以配置渠道默认的回调接口，渠道层级可以配置一个渠道默认的鉴权、加密类型</h5>
+					<h5>5)方案层级可以配置PROJECT_CODE类型的接口，可以配置方案专用的回调接口，方案层级可以独立配置不同于渠道默认的鉴权、加密类型。</h5>
+				</div>
+				
+			</div>
+			<div class="control_progress_box control_sayInformation">
+				<div class="sayInformation">
+					说明1：方案层级上的鉴权参数允许访问对应渠道上配置的接口服务，显然地，渠道层级上的鉴权参数不允许访问其下方案配置的特殊接口服务。</div>
+				<div class="sayInformation">
+					说明2：如果希望正确的使用方案上配置的鉴权参数及其下的接口服务，那么请求参数中的PROJECT_CODE是必需的。</div>
+				<div class="sayInformation">
+					说明3：如果使用的是渠道层级默认的鉴权参数，那么请求参数中的DATA_SOURCE是必需、的，但是PROJECT_CODE不是必需的。</div>
+			</div>
+		</div>
+</div>	
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script> 
+</body>
+</html>

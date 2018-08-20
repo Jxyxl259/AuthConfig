@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yaic.auth.interior.dao.AppUserRoleDao">
+	
+	<resultMap id="BaseResultMap" type="com.yaic.auth.interior.model.AppUserRoleModel">
+		<id column="USER_ROLE_ID" jdbcType="VARCHAR" property="userRoleId" />
+		<result column="CREATED_DATE" jdbcType="TIMESTAMP" property="createdDate" />
+		<result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+		<result column="UPDATED_DATE" jdbcType="TIMESTAMP" property="updatedDate" />
+		<result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+		<result column="USER_ID" jdbcType="VARCHAR" property="userId" />
+		<result column="ROLE_ID" jdbcType="VARCHAR" property="roleId" />
+	</resultMap>
+
+	<resultMap id="treeNodeMap" type="com.yaic.auth.interior.common.TreeNode">
+		<id property="id" column="ROLE_ID" jdbcType="VARCHAR"></id>
+		<result property="text" column="ROLE_NAME" jdbcType="VARCHAR"></result>
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		USER_ROLE_ID, CREATED_DATE, CREATED_BY, UPDATED_DATE, UPDATED_BY, USER_ID, ROLE_ID
+	</sql>
+	
+	<delete id="deleteByUserCode" parameterType="java.lang.String">
+		delete from app_user_role
+		where USER_ID = #{userCode,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="saveUserRoleList" parameterType="java.util.List">
+		INSERT INTO app_user_role
+		(CREATED_BY,UPDATED_BY,ROLE_ID, USER_ID,USER_ROLE_ID )
+		VALUES
+		<foreach collection="list" index="index" item="item"
+			separator=",">
+			(#{item.createdBy,jdbcType=VARCHAR},
+			#{item.updatedBy,jdbcType=VARCHAR},
+			#{item.roleId,jdbcType=VARCHAR},
+			#{item.userId,jdbcType=VARCHAR},
+			#{item.userRoleId,jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
+	<select id="findAllRoles" resultMap="treeNodeMap">
+		select t.ROLE_ID,t.ROLE_NAME
+		from app_role t where t.VALID_FLAG = 1
+	</select>
+
+	<select id="findRolesByUsercode" resultMap="treeNodeMap"
+		parameterType="map">
+		select t.ROLE_ID,t.ROLE_NAME from app_role t where t.VALID_FLAG = 1 and
+		t.ROLE_ID
+		in (select t1.ROLE_ID from app_user_role t1 where t1.user_id =
+		#{userCode ,jdbcType= VARCHAR })
+	</select>
+
+</mapper>

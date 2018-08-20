@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+	<link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+	<link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+	<link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/index.css" />
+	<link rel="stylesheet" href="../../lib/zTree/v3/css/zTreeStyle/zTreeStyle.css" type="text/css">
+	
+	<title>资源管理</title>
+	<style type="text/css">
+	.ztree li span.button.add{margin-right:2px;background-position:-144px 0;vertical-align:top;*vertical-align:middle}
+	.ztreeWrap{margin:20px;}
+	.ztree li span.button.add {
+		margin-left: 2px;
+		margin-right: -1px;
+		background-position: -144px 0;
+		vertical-align: top;
+		*vertical-align: middle
+		
+	}
+	</style>
+</head>
+<body>
+	<nav class="breadcrumb">
+		<i class="Hui-iconfont">&#xe63c;</i>&nbsp;资源管理 <a
+			class="btn btn-success radius r"
+			style="line-height: 1.6em; margin-top: 3px"
+			href="javascript:location.replace(location.href);" title="刷新"><i
+			class="Hui-iconfont">&#xe68f;</i></a>
+	</nav>
+	<div class="page-container">
+		<div class="cl pd-5 bg-1 bk-gray  ztreeWrap">
+	        <div class="zTreeDemoBackground left">  
+	            <ul id="treeDemo" class="ztree"></ul>  
+	        </div>  
+		</div>
+		
+		<div class="pd-30" id="fromTemplate" style="display:none;">
+		<form id="us">
+			<table class="table table-border  table-bg" style="border: 0 !important; border-collapse: separate;" id="accountTable">
+				<tbody>
+					<tr class="detailShow" style="display:none;">
+						<td width="20%" class="text-r" style="text-align: right !important; padding: 8px; line-height: 20px; word-break: break-all;">
+							<font style="color: red">*</font>资源编号:</td>
+						<td width="45%" style="text-align: right !important; padding: 8px; line-height: 20px; word-break: break-all;">
+							<input name="resourceId" id="resourceId" class="input-text disableN" type="text" value="" ></td>
+						<td width="33%">&nbsp;</td>
+					</tr>
+					<tr>
+						<td width="20%" class="text-r" style="text-align: right !important; padding: 8px; line-height: 20px; word-break: break-all;">
+							<font style="color: red">*</font>资源名称:</td>
+						<td width="45%" style="text-align: right !important; padding: 8px; line-height: 20px; word-break: break-all;">
+							<input name="resourceName" id="resourceName" class="input-text disableY notNull rightName maxLength20" type="text" value="" ></td>
+						<td width="33%">&nbsp;</td>
+					</tr>
+					<tr>
+						<td class="text-r" width="20%" style="text-align: right !important; padding: 8px; line-height: 20px; word-break: break-all;">
+							<font style="color: red">*</font>资源URL:</td>
+						<td style="text-align: right !important; padding: 8px; line-height: 20px; word-break: break-all;">
+							<input name="actionUrl" id="actionUrl" class="input-text disableY notNull maxLength100" type="text" value="" ></td>
+						<td>&nbsp;</td>
+					</tr>
+					<!-- <tr class="detailShow" style="display:none;">
+						<td class="text-r" width="20%" style="text-align: right !important; padding: 8px; line-height: 20px; word-break: break-all;">
+							<font style="color: red">*</font>资源样式:</td>
+						<td style="text-align: right !important; padding: 8px; line-height: 20px; word-break: break-all;">
+							<input name="resourceIconClass" id="resourceIconClass" class="input-text disableN" type="text" value="" ></td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr class="detailShow" style="display:none;">
+						<td class="text-r" width="20%" style="text-align: right !important; padding: 8px; line-height: 20px; word-break: break-all;">
+							<font style="color: red">*</font>显示顺序:</td>
+						<td style="text-align: right !important; padding: 8px; line-height: 20px; word-break: break-all;">
+							<input name="displayOrder" id="displayOrder" class="input-text disableN" type="text" value="" ></td>
+						<td>&nbsp;</td>
+					</tr> -->
+				</tbody>
+			</table>
+		</form>
+	</div>
+	</div>
+
+<script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="../../js/menu.js"></script>
+<script type="text/javascript" src="../../static/yafa-restful-client.js"></script>
+<script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script> 
+<script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="../../lib/zTree/v3/js/jquery.ztree.core-3.5.min.js"></script>
+<script type="text/javascript" src="../../lib/zTree/v3/js/jquery.ztree.exedit-3.5.min.js"></script>
+<script type="text/javascript" src="../../lib/zTree/v3/js/jquery.ztree.excheck-3.5.min.js"></script>
+<script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script> 
+<script type="text/javascript" src="../../lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
+<script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript" src="../../js/common.js"></script>
+<script type="text/javascript" src="../../js/systemHtml/resource-list.js"></script>
+<script type="text/javascript">
+</script>
+</body>
+</html>

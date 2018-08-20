@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html class="authconfigHtml">
+<head>
+	<meta charset="utf-8" />
+	<meta name="renderer" content="webkit|ie-comp|ie-stand"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+	<link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+	<link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+	<link rel="stylesheet" type="text/css" href="../../lib/zTree/v3/css/zTreeStyle/zTreeStyle.css" type="text/css">
+	<link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+	<style>
+		.ztree li span.button.add {margin-left:2px; margin-right: -1px; background-position:-144px 0; vertical-align:top; *vertical-align:middle}
+		.ztree li span.button.firstPage {float:right; margin-left:2px; margin-right: 0; background-position:-144px -16px; vertical-align:top; *vertical-align:middle}
+		.ztree li span.button.prevPage {float:right; margin-left:2px; margin-right: 0; background-position:-144px -48px; vertical-align:top; *vertical-align:middle}
+		.ztree li span.button.nextPage {float:right; margin-left:2px; margin-right: 0; background-position:-144px -64px; vertical-align:top; *vertical-align:middle}
+		.ztree li span.button.lastPage {float:right; margin-left:2px; margin-right: 0; background-position:-144px -32px; vertical-align:top; *vertical-align:middle}
+		div#rMenu {
+	    position:absolute; 
+	    visibility:hidden;  
+	    background:#f5f5f5;
+	    padding: 2px,10px;  
+	    border: 1px solid rgba(0, 0, 0, 0.15); 
+	    }
+		#rMenu ul li{
+		    text-align:center;
+		    line-height: 2.4em; 
+		    border-radius: 1px; 
+		    text-shadow: 1px 1px 0 white; 
+		    white-space: nowrap; 
+		    text-decoration:none; 
+		    display:block;
+		 	margin: 1px 2px;   
+		 	padding: 0 5px;  
+		 	cursor: pointer; 
+		 	list-style: none outside none; 
+		 	background-color: transparent; 
+		}
+	
+	</style>
+	<title>快速配置</title>
+</head>
+
+<body class="pos-r">
+	<div class="pos-a" style="width:230px;left:0;top:0; bottom:0; height:100%; border-right:1px solid #e5e5e5; background-color:#f5f5f5; overflow:auto;position:fixed;">
+		<div id="ztree_accountSeach"><input id='accountSeachId' class="ztreeInput" type='text' placeholder="请输入账号..." /><button id='accountSeachBtnId' class="ztreeButton" onclick='seachAccount();'>确定</button></div>
+		<ul id="treeDemo" class="ztree"></ul>
+		<div id="ztree_pageInfo"></div>
+	</div>
+	<div style="margin-left:230px;">
+		<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 第三方管理 <span class="c-gray en">&gt;</span>快速配置</nav>
+		<div class="page-container page_authconfig">
+			<!--<div class="mt-20">-->
+				<!-- level=  1用户	2渠道		3方案		 -->
+				<iframe id="testIframe"name="testIframe" style="border:none;" width="100%"></iframe>
+			<!--</div>-->
+		</div>
+	</div>
+	<div id="rMenu">
+	<ul>
+		<li id="addRightAccount" onclick="addPage();">增加账号</li>
+		<li id="addRightDatasOource" onclick="addPage();">增加渠道</li>
+		<li id="addRightProject" onclick="addPage();">增加方案</li>
+	</ul>
+</div>
+	
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="../../static/yafa-restful-client.js"></script>
+<script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script> 
+<script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="../../lib/zTree/v3/js/jquery.ztree.all-3.5.min.js"></script>
+
+<script type="text/javascript" src="../../js/thirdJs/authconfig.js"></script>
+
+
+</body>
+</html>

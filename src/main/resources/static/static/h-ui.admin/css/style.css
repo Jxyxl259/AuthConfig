@@ -1,0 +1,80 @@
+@charset "utf-8";
+/* 你自己的样式 */
+/* login 的样式*/
+.header_top{position: absolute;left:0;right:0;width:100%;z-index: 99;height:60px;line-height:60px;background: #426374 ;}
+.header_top{font-size:32px;text-indent: 20px;text-shadow: 0px 0px 2px #f5f5f5;color:#f5f5f5;}
+.loginBox .row{margin-top:45px;}
+.login_btn{width:360px;}
+.col-xs-3{margin-right: -60px;margin-left: 28px;z-index: 3;}
+.col-xs-offset-3{margin-left:20%;}
+.loginBox .input-text{text-indent: 30px;}
+/* login end的样式*/
+
+/* ztree dom结构样式 */
+/*ztree 外围样式 start  */
+.authconfigHtml{overflow:hidden;}
+.page_authconfig{padding:0;}
+/* dataShow start */
+.account_select select{height:36px;width: 360px;}
+/* .account_detail{border-bottom:1px solid #c0c0c0;} */
+.detail_message{display: flex;flex-wrap:wrap;justify-content: space-between;border-top:1px dashed #ccc;}
+fieldset .detail_message:first-of-type{border-top:none;}
+.detail_message_li{width:50%;margin:5px  0;}
+/* .detail_message_li>span {display:inline-block; width:70px;text-align:right;margin-right: 10px;}} */
+.preview_span1 {display:inline-block; width:110px;text-align:right;margin-right: 10px;}
+.preview_span2 {display:inline-block; width:430px;text-align:left;margin-left: 10px;}
+.preview_span3 {display:inline-block; width:1043px; height:25px;t-align:left;margin-left: 10px;}
+#accountId{display: block;}
+#datasourceName{border: 1px solid #ddd;font-size: 14px; padding: 8px;width: 410px;margin-right:20px;}
+.panel-default>.panel-header{background-color:#f5fafe;}
+.selHide{display: none;}
+.account_model_box fieldset{margin-top:15px;}
+.account_model_box legend{background:#f5f5f5;padding:0 15px;border-bottom:none;width:auto;font-size:16px;}
+
+/* dataShow end */
+/*ztree 外围样式 end  */
+.detail_table table tr td:nth-child(1){width:26%;}
+.detail_table table tr td:nth-child(2){width:72%;}
+.detail_table table tr td:nth-child(3){width:0%;}
+.detail_table table tr td .input-text{border:none;background:transparent;overflow:hidden;text-overflow:ellipsis;}
+.detail_table table tr td select{appearance:none;-moz-appearance:none;-webkit-appearance:none;}
+.ztreeInput{border:1px solid #ddd;margin:3px 10px;height:20px;padding-left:3px;width:140px;}
+.ztreeButton{border:1px solid #ddd; box-shadow:0 0 1px 1px #ccc; padding:1px 5px; color:green;cursor: pointer}
+#ztree_pageInfo{text-indent: 10px;margin-top:10px;}
+/*welcome  start*/
+.page-information_sns{background:#f5fafe;}
+.information_sns{margin:0 15px;}
+.information_sns_head{text-align:center;padding:0;}
+.information_sns_title {margin:0 38px;}
+.control_progress{border-bottom:1px dashed #ccc;padding-bottom:10px;}
+.control_progress h4{margin-left:38px;line-height:50px;}
+.control_progress h5{margin-left:50px;line-height:36px;}
+.control_progress .information_text{margin-left:90px;margin-right:38px;}
+.control_sayInformation{margin-top:15px;}
+.sayInformation{line-height:42px;font-size:16px;}
+.mark{color:red;background:transparent;}
+
+@media screen and  (max-width :1200px){
+	/*     body{background:pink;}  */
+	    .preview_span1 {display:inline-block; width:70px;text-align:right;margin-right: 10px;}
+	    .preview_span3 {display:inline-block; width:960px; height:25px;t-align:left;margin-left: 10px;}
+}
+/*welcome  end*/
+@media all and (min-height:400px){
+	#testIframe {height:400px;}
+}
+@media all and (min-height:401px) and (max-height:500px){
+	#testIframe {height:480px;}
+}
+@media all and (min-height:501px) and (max-height:600px){
+	#testIframe {height:550px;}
+}
+@media all and (min-height:601px) and (max-height:700px){
+	#testIframe {height:580px;}
+}
+@media all and (min-height:701px) and (max-height:800px){
+	#testIframe {height:710px;}
+}
+@media all and (min-height:801px) and (max-height:1000px){
+	#testIframe {height:820px;}
+}

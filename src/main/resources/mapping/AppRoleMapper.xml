@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yaic.auth.interior.dao.AppRoleDao">
+	<resultMap id="BaseResultMap" type="com.yaic.auth.interior.model.AppRoleModel">
+		<id column="ROLE_ID" jdbcType="VARCHAR" property="roleId" />
+		<result column="CREATED_DATE" jdbcType="TIMESTAMP" property="createdDate" />
+		<result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+		<result column="UPDATED_DATE" jdbcType="TIMESTAMP" property="updatedDate" />
+		<result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+		<result column="ROLE_NAME" jdbcType="VARCHAR" property="roleName" />
+		<result column="VALID_FLAG" jdbcType="CHAR" property="validFlag" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		ROLE_ID, CREATED_DATE, CREATED_BY, UPDATED_DATE,
+		UPDATED_BY, ROLE_NAME,
+		VALID_FLAG
+	</sql>
+
+	<!-- 根据主键删除单个角色 -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		update app_role
+		set valid_flag = 0
+		where ROLE_ID =
+		#{roleId,jdbcType=VARCHAR}
+	</delete>
+	
+	<insert id="addInfo" parameterType="com.yaic.auth.interior.model.AppRoleModel">
+		insert into app_role
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="roleId != null">
+				ROLE_ID,
+			</if>
+			<if test="createdDate != null">
+				CREATED_DATE,
+			</if>
+			<if test="createdBy != null">
+				CREATED_BY,
+			</if>
+			<if test="updatedDate != null">
+				UPDATED_DATE,
+			</if>
+			<if test="updatedBy != null">
+				UPDATED_BY,
+			</if>
+			<if test="roleName != null">
+				ROLE_NAME,
+			</if>
+			<if test="validFlag != null">
+				VALID_FLAG,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="roleId != null">
+				#{roleId,jdbcType=VARCHAR},
+			</if>
+			<if test="createdDate != null">
+				#{createdDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdBy != null">
+				#{createdBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updatedDate != null">
+				#{updatedDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updatedBy != null">
+				#{updatedBy,jdbcType=VARCHAR},
+			</if>
+			<if test="roleName != null">
+				#{roleName,jdbcType=VARCHAR},
+			</if>
+			<if test="validFlag != null">
+				#{validFlag,jdbcType=CHAR},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="updateInfo" parameterType="com.yaic.auth.interior.model.AppRoleModel">
+		update app_role
+		<set>
+			<if test="createdDate != null">
+				CREATED_DATE = #{createdDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdBy != null">
+				CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updatedDate != null">
+				UPDATED_DATE = #{updatedDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updatedBy != null">
+				UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+			</if>
+			<if test="roleName != null">
+				ROLE_NAME = #{roleName,jdbcType=VARCHAR},
+			</if>
+			<if test="validFlag != null">
+				VALID_FLAG = #{validFlag,jdbcType=CHAR},
+			</if>
+		</set>
+		where ROLE_ID = #{roleId,jdbcType=VARCHAR}
+	</update>
+
+	<!--多条件查询获取角色列表 -->
+	<select id="getList" parameterType="com.yaic.auth.interior.model.AppRoleModel"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from app_role t
+		<where>
+			<if test=" roleId != null  and  roleId!='' ">
+				and t.ROLE_ID like CONCAT('%', #{roleId}, '%')
+			</if>
+			<if test=" roleName != null  and roleName != '' ">
+				and t.ROLE_NAME like CONCAT('%', #{roleName}, '%')
+			</if>
+			<if test="1==1">
+				and VALID_FLAG = 1
+			</if>
+		</where>
+		ORDER BY t.CREATED_DATE DESC,t.ROLE_ID DESC
+	</select>
+
+	<!-- 根据主键ID获取角色 -->
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from app_role
+		where ROLE_ID = #{roleId,jdbcType=VARCHAR} 
+		and VALID_FLAG = 1
+	</select>
+
+	<select id="getMaxRoleId" resultType="java.lang.String">
+		SELECT
+		MAX(t.ROLE_ID)
+		FROM app_role t
+	</select>
+
+
+</mapper>
